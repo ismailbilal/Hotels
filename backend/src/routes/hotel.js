@@ -3,24 +3,44 @@ import hotelModel from "../models/hotel.js";
 
 const hotel = Router();
 
-hotel.get("/", async (req, res) => {
-  const result = await hotelModel.findAll();
+hotel.get("/:type", async (req, res) => {
+  const result = await hotelModel.findAll(req.params.type);
   res.json(result);
 });
-hotel.get("/:id", async (req, res) => {
-  const result = await hotelModel.findById(req.params.id);
+hotel.get("/:type/:id", async (req, res) => {
+  const result = await hotelModel.findById(req.params.type, req.params.id);
   res.json(result);
 });
-hotel.post("/", async (req, res) => {
-  const result = await hotelModel.create(req.body);
+hotel.post("/node/:type", async (req, res) => {
+  const result = await hotelModel.create(req.params.type, req.body);
   res.json(result);
 });
-hotel.put("/:id", async (req, res) => {
-  const result = await hotelModel.findByIdAndUpdate(req.params.id, req.body);
+hotel.post(
+  "/relationship/:type/:srcName/:srcId/:desName/:desId",
+  async (req, res) => {
+    const result = await hotelModel.createRelationship(
+      req.params.type,
+      req.params.srcName,
+      req.params.srcId,
+      req.params.desName,
+      req.params.desId
+    );
+    res.json(result);
+  }
+);
+hotel.put("/:type/:id", async (req, res) => {
+  const result = await hotelModel.findByIdAndUpdate(
+    req.params.type,
+    req.params.id,
+    req.body
+  );
   res.json(result);
 });
-hotel.delete("/:id", async (req, res) => {
-  const result = await hotelModel.findBYIdAndDelete(req.params.id);
+hotel.delete("/:type/:id", async (req, res) => {
+  const result = await hotelModel.findBYIdAndDelete(
+    req.params.type,
+    req.params.id
+  );
   res.json(result);
 });
 

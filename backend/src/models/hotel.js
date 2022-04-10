@@ -4,41 +4,59 @@ import { config } from "dotenv";
 import { nanoid } from "nanoid";
 config();
 
-const { url, username, password, database } = process.env;
+const { url, db_username, db_password, database } = process.env;
 
-const driver = neo4j.driver(url, neo4j.auth.basic(username, password));
+const driver = neo4j.driver(url, neo4j.auth.basic(db_username, db_password));
 const session = driver.session({ database });
 
-const findAll = async () => {
-  const result = await session.run(`match (h:Hotel) return h`);
-  return result.records.map((i) => i.get("h").properties);
+const findAll = async (type) => {
+  const result = await session.run(`match (n:${type}) return n`);
+  return result.records.map((i) => i.get("n").properties);
 };
 
-const findById = async (id) => {
+const findById = async (type, id) => {
   const result = await session.run(
-    `match (h:Hotel {_id: "${id}"}) return h limit 1`
+    `match (n:${type} {_id: "${id}"}) return n limit 1`
   );
-  return result.records[0].get("h").properties;
+  return result.records[0].get("n").properties;
 };
 
-const create = async (hotel) => {
+const create = async (type, obj) => {
   const result = await session.run(
-    `create (h:Hotel {_id: '${nanoid(8)}', title: '${hotel.title}', address:'${
-      hotel.address
-    }'}) return h`
+    `create (n:${type} {_id: '${nanoid(8)}', title: '${obj.title}', address:'${
+      obj.address
+    }'}) return n`
   );
-  return result.records[0].properties;
+  return result.records[0].get("n").properties;
 };
 
-const findByIdAndUpdate = async (id, hotel) => {
+const createRelationship = async (type, srcName, srcId, desName, desId) => {
   const result = await session.run(
-    `match (h:Hotel {_id: '${id}'}) set h.title = '${hotel.title}', h.address='${hotel.address}' return h`
+    `MATCH (src:${srcName} {_id: '${srcId}'}), (des:${desName} {_id: '${desId}'})
+    MERGE (src)-[r:${type}]->(des)
+    RETURN  src, r, des`
   );
-  return result.records[0].get("h").properties;
+  return result.records[0].get("r").properties;
 };
 
-const findBYIdAndDelete = async (id, hotel) => {
-  await session.run(`match (h:Hotel {_id: '${id}'}) delete h`);
+const findByIdAndUpdate = async (type, id, obj) => {
+  // n.title = '${obj.title}', n.address='${obj.address}'
+  let parms = "";
+  for (const key in obj) {
+    if (Object.hasOwnProperty.call(obj, key)) {
+      const element = obj[key];
+      parms += `n.${key} = ${element},`;
+    }
+  }
+  console.log(parms);
+  const result = await session.run(
+    `match (n:${type} {_id: '${id}'}) set ${parms} return n`
+  );
+  return result.records[0].get("n").properties;
+};
+
+const findBYIdAndDelete = async (type, id, obj) => {
+  await session.run(`match (n:${type} {_id: '${id}'}) delete n`);
   return await findAll();
 };
 
@@ -46,6 +64,7 @@ export default {
   findAll,
   findById,
   create,
+  createRelationship,
   findByIdAndUpdate,
   findBYIdAndDelete,
 };
