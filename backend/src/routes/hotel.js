@@ -16,7 +16,7 @@ hotel.post("/", async (req, res) => {
   res.json(result);
 });
 hotel.put("/:id", async (req, res) => {
-  const result = await hotelModel.findBYIdAndUpdate(req.params.id, req.body);
+  const result = await hotelModel.findByIdAndUpdate(req.params.id, req.body);
   res.json(result);
 });
 hotel.delete("/:id", async (req, res) => {

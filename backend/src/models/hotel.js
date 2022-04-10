@@ -16,9 +16,9 @@ const findAll = async () => {
 
 const findById = async (id) => {
   const result = await session.run(
-    `match (h:Hotel {_id: '${id}'}) return h limit 1`
+    `match (h:Hotel {_id: "${id}"}) return h limit 1`
   );
-  return result.records[0].properties;
+  return result.records[0].get("h").properties;
 };
 
 const create = async (hotel) => {
@@ -32,9 +32,9 @@ const create = async (hotel) => {
 
 const findByIdAndUpdate = async (id, hotel) => {
   const result = await session.run(
-    `match (h:Hotel {_id: '${id}'}) set title = '${hotel.title}', address='${hotel.address}'}) return h`
+    `match (h:Hotel {_id: '${id}'}) set h.title = '${hotel.title}', h.address='${hotel.address}' return h`
   );
-  return result.records[0].properties;
+  return result.records[0].get("h").properties;
 };
 
 const findBYIdAndDelete = async (id, hotel) => {
