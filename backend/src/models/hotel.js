@@ -22,25 +22,33 @@ const findById = async (type, id) => {
 };
 
 const create = async (type, obj) => {
+  let parms = "";
+  for (const key in obj) {
+    if (Object.hasOwnProperty.call(obj, key)) {
+      const element = obj[key];
+      parms += `n.${key}= "${element}", `;
+    }
+  }
+  parms = parms.slice(0, parms.length - 2);
   const result = await session.run(
-    `create (n:${type} {_id: '${nanoid(8)}', title: '${obj.title}', address:'${
-      obj.address
-    }'}) return n`
+    `MERGE (n:${type} {name:"${obj.name}"}) ON CREATE SET n._id= "${nanoid(
+      8
+    )}", ${parms} return n`
   );
   return result.records[0].get("n").properties;
 };
 
 const createRelationship = async (type, srcName, srcId, desName, desId) => {
   const result = await session.run(
-    `MATCH (src:${srcName} {_id: '${srcId}'}), (des:${desName} {_id: '${desId}'})
+    `MATCH (src:${srcName} {_id: "${srcId}"}), (des:${desName} {_id: "${desId}"})
     MERGE (src)-[r:${type}]->(des)
     RETURN  src, r, des`
   );
-  return result.records[0].get("r").properties;
+  return result.records;
 };
 
 const findByIdAndUpdate = async (type, id, obj) => {
-  // n.title = '${obj.title}', n.address='${obj.address}'
+  // n.name = "${obj.name}", n.address="${obj.address}"
   let parms = "";
   for (const key in obj) {
     if (Object.hasOwnProperty.call(obj, key)) {
@@ -48,15 +56,14 @@ const findByIdAndUpdate = async (type, id, obj) => {
       parms += `n.${key} = ${element},`;
     }
   }
-  console.log(parms);
   const result = await session.run(
-    `match (n:${type} {_id: '${id}'}) set ${parms} return n`
+    `match (n:${type} {_id: "${id}"}) set ${parms} return n`
   );
   return result.records[0].get("n").properties;
 };
 
 const findBYIdAndDelete = async (type, id, obj) => {
-  await session.run(`match (n:${type} {_id: '${id}'}) delete n`);
+  await session.run(`match (n:${type} {_id: "${id}"}) delete n`);
   return await findAll();
 };
 
