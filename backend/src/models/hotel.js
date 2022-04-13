@@ -1,5 +1,4 @@
 import neo4j from "neo4j-driver";
-// import { uri, user, password, database } from "../../DBLogin.js";
 import { config } from "dotenv";
 import { nanoid } from "nanoid";
 config();
@@ -9,69 +8,67 @@ const { url, db_username, db_password, database } = process.env;
 const driver = neo4j.driver(url, neo4j.auth.basic(db_username, db_password));
 const session = driver.session({ database });
 
-const findAll = async (type) => {
-  const result = await session.run(`match (n:${type}) return n`);
+const findAll = async () => {
+  const result = await session.run(`MATCH (n:Hotel) RETURN n`);
   return result.records.map((i) => i.get("n").properties);
 };
 
-const findById = async (type, id) => {
+const findById = async (id) => {
   const result = await session.run(
-    `match (n:${type} {_id: "${id}"}) return n limit 1`
+    `MATCH (n:Hotel {_id: "${id}"}) RETURN n LIMIT 1`
   );
   return result.records[0].get("n").properties;
 };
 
-const create = async (type, obj) => {
-  let parms = "";
-  for (const key in obj) {
-    if (Object.hasOwnProperty.call(obj, key)) {
-      const element = obj[key];
-      parms += `n.${key}= "${element}", `;
-    }
-  }
-  parms = parms.slice(0, parms.length - 2);
+const create = async (obj) => {
+  const writeParm = (parm) => parm || "NULL";
+
   const result = await session.run(
-    `MERGE (n:${type} {name:"${obj.name}"}) ON CREATE SET n._id= "${nanoid(
+    `MERGE (n:Hotel {name:"${obj.name}"}) ON CREATE SET n._id= "${nanoid(
       8
-    )}", ${parms} return n`
+    )}", n.rating= ${writeParm(obj.rating)}, n.reviewCount= ${
+      obj.reviewCount
+    }, n.webSite= "${writeParm(obj.webSite)}", n.phoneNumber= "${
+      obj.phoneNumber
+    }", n.imageUrl= "${writeParm(obj.imageUrl)}" RETURN n`
   );
   return result.records[0].get("n").properties;
 };
 
-const createRelationship = async (type, srcName, srcId, desName, desId) => {
-  const result = await session.run(
-    `MATCH (src:${srcName} {_id: "${srcId}"}), (des:${desName} {_id: "${desId}"})
-    MERGE (src)-[r:${type}]->(des)
-    RETURN  src, r, des`
-  );
-  return result.records;
-};
-
-const findByIdAndUpdate = async (type, id, obj) => {
+const findByIdAndUpdate = async (id, obj) => {
   // n.name = "${obj.name}", n.address="${obj.address}"
-  let parms = "";
-  for (const key in obj) {
-    if (Object.hasOwnProperty.call(obj, key)) {
-      const element = obj[key];
-      parms += `n.${key} = ${element},`;
-    }
-  }
   const result = await session.run(
-    `match (n:${type} {_id: "${id}"}) set ${parms} return n`
+    `MATCH (n:Hotel {_id: "${id}"}) SET n.name= "${obj.name}", n.rating= ${obj.rating}, n.reviewCount= ${obj.reviewCount}, n.webSite= "${obj.webSite}", n.phoneNumber= "${obj.phoneNumber}", n.imageUrl= "${obj.imageUrl}" RETURN n`
   );
   return result.records[0].get("n").properties;
 };
 
-const findBYIdAndDelete = async (type, id, obj) => {
-  await session.run(`match (n:${type} {_id: "${id}"}) delete n`);
+const findBYIdAndDelete = async (id) => {
+  await session.run(`MATCH (n:Hotel {_id: "${id}"}) DELETE n`);
   return await findAll();
+};
+
+const findLocation = async (id) => {
+  const result = await session.run(
+    `MATCH (h:Hotel {_id: "${id}"})-[:LOCATED_IN]->(l:Location) RETURN l`
+  );
+  return result.records[0].get("l").properties;
+};
+
+const createReletionshipToLocation = async (hotelId, locationId) => {
+  const result = await session.run(`match (h:Hotel {_id: "${hotelId}"}),
+  (l:Location {_id: "${locationId}"})
+  merge (h)-[r:LOCATED_IN]->(l)
+  return h, r, l`);
+  return result.records[0].get("r").properties;
 };
 
 export default {
   findAll,
   findById,
   create,
-  createRelationship,
   findByIdAndUpdate,
   findBYIdAndDelete,
+  findLocation,
+  createReletionshipToLocation,
 };
