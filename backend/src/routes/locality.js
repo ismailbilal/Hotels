@@ -23,5 +23,20 @@ locality.delete("/locality/:id", async (req, res) => {
   const result = await localityModel.findBYIdAndDelete(req.params.id);
   res.json(result);
 });
+locality.get("/locality/:id/location", async (req, res) => {
+  const result = await localityModel.findLocation(req.params.id);
+  res.json(result);
+});
+locality.post("/locality/:localityId/city/:cityId", async (req, res) => {
+  const result = await localityModel.createRelationshipToCity(
+    req.params.localityId,
+    req.params.cityId
+  );
+  res.json(result);
+});
+locality.get("/locality/:id/city", async (req, res) => {
+  const result = await localityModel.findCity(req.params.id);
+  res.json(result);
+});
 
 export default locality;

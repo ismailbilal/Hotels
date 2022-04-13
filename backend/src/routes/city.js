@@ -23,5 +23,9 @@ city.delete("/city/:id", async (req, res) => {
   const result = await cityModel.findBYIdAndDelete(req.params.id);
   res.json(result);
 });
+city.get("/city/:id/locality", async (req, res) => {
+  const result = await cityModel.findLocality(req.params.id);
+  res.json(result);
+});
 
 export default city;
