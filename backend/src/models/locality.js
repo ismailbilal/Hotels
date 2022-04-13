@@ -44,10 +44,37 @@ const findBYIdAndDelete = async (id) => {
   return await findAll();
 };
 
+const findLocation = async (id) => {
+  const result = await session.run(
+    `MATCH (l:Locality {_id: "${id}"})<-[:POSITIONED_IN]-(lo:Location) RETURN lo`
+  );
+  return result.records.map((i) => i.get("lo").properties);
+};
+
+const createRelationshipToCity = async (localityId, cityId) => {
+  const result = await session.run(
+    `MATCH (l:Locality {_id: "${localityId}"}),
+    (c:City {_id: "${cityId}"})
+    MERGE (l)-[r:EXIST_IN]->(c)
+    RETURN l, r, c`
+  );
+  return result.records;
+};
+
+const findCity = async (id) => {
+  const result = await session.run(
+    `MATCH (l:Locality {_id: "${id}"})-[:EXIST_IN]->(c:City) RETURN c`
+  );
+  return result.records[0].get("c").properties;
+};
+
 export default {
   findAll,
   findById,
   create,
   findByIdAndUpdate,
   findBYIdAndDelete,
+  findLocation,
+  createRelationshipToCity,
+  findCity,
 };
