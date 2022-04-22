@@ -1,10 +1,11 @@
 import express from "express";
+import { config } from "dotenv";
 import hotel from "./src/routes/hotel.js";
 import location from "./src/routes/location.js";
-import { config } from "dotenv";
 import locality from "./src/routes/locality.js";
 import city from "./src/routes/city.js";
 import user from "./src/routes/user.js";
+import admin from "./src/routes/admin.js";
 
 config();
 const app = express();
@@ -15,5 +16,6 @@ app.use("/", location);
 app.use("/", locality);
 app.use("/", city);
 app.use("/", user);
+app.use("/", admin);
 app.listen(process.env.PORT);
 console.log("server started at http://localhost%d", process.env.PORT);
