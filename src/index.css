@@ -1,3 +1,41 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #6200ee;
+  --primary-variant: #3700b3;
+  --secondary: #03d4c6;
+  --secondary-variant: #018786;
+  --background: #fff;
+  --error: #b00020;
+  --on-primary: #fff;
+  --on-primary: #fff;
+  --on-secondary: #000;
+  --on-background: #000;
+  --on-error: #fff;
+}
+
+.dark {
+  --primary: #cdaef3;
+  --primary-variant: #bb86fc;
+  --secondary: #03d4c6;
+  --secondary-variant: #03d4c6;
+  --background: #121212;
+  --error: #cf6679;
+  --on-primary: #000;
+  --on-primary: #000;
+  --on-secondary: #000;
+  --on-background: #fff;
+  --on-error: #000;
+}
+
+.changeable {
+  transition: background 0.4s linear;
+}
+
 .App {
-  border: 1px solid green;
+  position: relative;
 }
