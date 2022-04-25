@@ -33,25 +33,6 @@ export default () => {
         </div>
       </StyledContent>
       <StyledForm id="form" onSubmit={login}>
-        <div className="social">
-          <div className="title">Get Started</div>
-          <div className="question">
-            Don't Have an Account?
-            <br />
-            <span onClick={goToSignUpPage}>Sing Up</span>
-          </div>
-          <div className="btn">
-            <div className="btn-1">
-              <img src="https://img.icons8.com/color/30/000000/google-logo.png" />
-              Sign In
-            </div>
-            <div className="btn-2">
-              <img src="https://img.icons8.com/ios-filled/30/ffffff/facebook-new.png" />
-              Sign In
-            </div>
-          </div>
-          <div className="or">Or</div>
-        </div>
         <div>
           <label htmlFor="email">Email</label>
           <i className="far fa-envelope"></i>
