@@ -1,7 +1,12 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { StyledHeader, StyledLogo } from "./StyledHeader";
 
 export default ({ logedIn }) => {
+  const navigate = useNavigate();
+
+  const gotToLoginPage = () => navigate("/login");
+  const gotToSignupPage = () => navigate("/signup");
   useEffect(() => {
     const changeTheme = () => {
       const elements = document.querySelectorAll(".changeable");
@@ -34,12 +39,12 @@ export default ({ logedIn }) => {
         {logedIn && <i className="fas fa-user"></i>}
         {!logedIn && (
           <div className="logButtns">
-            <button>
+            <button onClick={gotToSignupPage}>
               <i className="fas fa-user-plus"></i>
               <span> Sign Up</span>
             </button>
-            <button>
-              <i class="fas fa-sign-in-alt"></i>
+            <button onClick={gotToLoginPage}>
+              <i className="fas fa-sign-in-alt"></i>
               <span> Sign In</span>
             </button>
           </div>
