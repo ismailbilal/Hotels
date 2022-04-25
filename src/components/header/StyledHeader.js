@@ -93,8 +93,10 @@ const StyledHeader = styled.div`
 `;
 
 const StyledLogo = styled.div`
-  border: 1px solid;
-  color: var(--primary);
+  border: 2px solid;
+  outline: 2px solid var(--primary);
+  background-color: var(--primary);
+  color: var(--on-primary);
   transform: scale(1.5);
   padding: 0.2rem;
   margin-left: 16.5px;
