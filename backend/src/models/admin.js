@@ -20,9 +20,16 @@ const findById = async (id) => {
   return result.records[0].get("n").properties;
 };
 
+const findByEmail = async (email) => {
+  const result = await session.run(
+    `MATCH (n:Admin {email: '${email}'}) RETURN n LIMIT 1`
+  );
+  return result.records[0] ? result.records[0].get("n").properties : null;
+};
+
 const create = async (obj) => {
   const result = await session.run(
-    `MERGE (n:Admin {username:"${obj.username}"}) 
+    `MERGE (n:Admin {email:"${obj.email}"}) 
         ON CREATE SET n._id= "${nanoid(8)}",
                     n.password = "${obj.password}"
         RETURN n`
@@ -53,6 +60,19 @@ const findBYIdAndDelete = async (id) => {
   return await findAll();
 };
 
+const login = async (email, password) => {
+  const user = await findByEmail(email);
+  if (user) {
+    if (password == user.password) {
+      return { massage: "succes" };
+    } else {
+      return { message: "password incorrect" };
+    }
+  } else {
+    return { massage: "email incorrect" };
+  }
+};
+
 export default {
   findAll,
   findById,
@@ -60,4 +80,5 @@ export default {
   create,
   changePassword,
   changeEmail,
+  login,
 };

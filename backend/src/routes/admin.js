@@ -27,5 +27,9 @@ admin.delete("/admin/:id", async (req, res) => {
   const result = await adminModel.findBYIdAndDelete(req.params.id);
   res.json(result);
 });
+admin.post("/admin/login", async (req, res) => {
+  const result = await adminModel.login(req.body.email, req.body.password);
+  res.json(result);
+});
 
 export default admin;
