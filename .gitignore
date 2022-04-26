@@ -4,9 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
-/backend/node_modules
-/backend/DBLogin.js
-/backend/.env
+/updateAddress.js
 
 # testing
 /coverage

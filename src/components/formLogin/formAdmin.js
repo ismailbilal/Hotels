@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { StyledContainer, StyledContent, StyledForm } from "./StyledFormAuth";
 
@@ -9,13 +9,45 @@ export default () => {
 
   const gotToHome = () => navigate("/home");
 
-  const login = (e) => {
-    e.preventDefault();
-  };
+  const id = (id) => document.getElementById(id);
+  const classes = (classes) => document.getElementsByClassName(classes);
 
-  const goToSignUpPage = () => {
-    navigate("/signup");
-  };
+  useEffect(() => {
+    const engine = (id, serial, message1, message2) => {
+      const errorMsg = classes("error"),
+        successIcon = classes("success-icon"),
+        failureIcon = classes("failure-icon");
+      if (id.value.trim() == "") {
+        errorMsg[serial].innerHTML = message1;
+        id.style.border = "2px solid red";
+
+        failureIcon[serial].style.opacity = "1";
+        successIcon[serial].style.opacity = "0";
+      } else {
+        errorMsg[serial].innerHTML = "";
+        id.style.border = "2px solid green";
+
+        failureIcon[serial].style.opacity = "0";
+        successIcon[serial].style.opacity = "1";
+      }
+    };
+
+    const login = (e) => {
+      e.preventDefault();
+
+      let email = id("email"),
+        password = id("password");
+
+      engine(email, 0, "Email cannot be blank");
+      engine(password, 1, "Password cannot be blank");
+    };
+
+    const form = id("form");
+    form.addEventListener("submit", login);
+    return () => {
+      form.removeEventListener("submit", login);
+    };
+  }, []);
 
   return (
     <StyledContainer>
@@ -32,7 +64,7 @@ export default () => {
           attractive offers today !
         </div>
       </StyledContent>
-      <StyledForm id="form" onSubmit={login}>
+      <StyledForm id="form">
         <div>
           <label htmlFor="email">Email</label>
           <i className="far fa-envelope"></i>
