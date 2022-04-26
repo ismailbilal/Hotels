@@ -34,5 +34,9 @@ user.get("/user/:id/hotel", async (req, res) => {
   const result = await userModel.getHotelsVisited(req.params.id);
   res.json(result);
 });
+user.post("/user/login", async (req, res) => {
+  const result = await userModel.login(req.body.username, req.body.password);
+  res.json(result);
+});
 
 export default user;
