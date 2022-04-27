@@ -2,11 +2,12 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { StyledHeader, StyledLogo } from "./StyledHeader";
 
-export default ({ logedIn }) => {
+export default ({ logedIn, sessionType }) => {
   const navigate = useNavigate();
 
   const gotToLoginPage = () => navigate("/login");
   const gotToSignupPage = () => navigate("/signup");
+  const extructUserFromEmail = (email) => (email ? email.split("@")[0] : "");
   useEffect(() => {
     const changeTheme = () => {
       const elements = document.querySelectorAll(".changeable");
@@ -36,7 +37,19 @@ export default ({ logedIn }) => {
           <i className="fas fa-moon"></i>
           <div className="ball"></div>
         </label>
-        {logedIn && <i className="fas fa-user"></i>}
+        {logedIn && (
+          <div className="sessionButton">
+            <button>
+              <i className="fas fa-user"></i>
+              <span>
+                {sessionType == "admin"
+                  ? extructUserFromEmail(window.sessionStorage.getItem("email"))
+                  : window.sessionStorage.getItem("username")}
+              </span>
+              <i class="fas fa-caret-down"></i>
+            </button>
+          </div>
+        )}
         {!logedIn && (
           <div className="logButtns">
             <button onClick={gotToSignupPage}>

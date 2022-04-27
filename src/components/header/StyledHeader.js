@@ -15,13 +15,13 @@ const StyledHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
-  .fa-user {
+  /* .fa-user {
     font-size: 2em;
     cursor: pointer;
     &:hover {
       color: var(--primary);
     }
-  }
+  } */
   .checkbox:checked + .label .ball {
     transform: translateX(24px);
   }
@@ -75,15 +75,37 @@ const StyledHeader = styled.div`
         }
       }
     }
+    .sessionButton {
+      button {
+        color: var(--primary);
+        background-color: transparent;
+        border: none;
+        padding: 0.3rem 0.7rem;
+        .fa-user {
+          color: var(--background);
+          background-color: var(--primary);
+          border-radius: 50%;
+          padding: 5px;
+        }
+        :hover {
+          background-color: rgba(0, 0, 0, 0.1);
+        }
+        span {
+          margin: 0 0.5rem;
+        }
+      }
+    }
   }
   @media (max-width: 768px) {
     .rigthSection {
       gap: 0.5rem;
-      .logButtns {
+      .logButtns,
+      .sessionButton {
         gap: 0.5rem !important;
         button {
           span {
             font-size: 0;
+            margin: 0 0.2rem;
           }
         }
       }

@@ -1,19 +1,20 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { getAdminLogin, getUsers } from "../../API.js";
 import { StyledContainer, StyledContent, StyledForm } from "./StyledFormAuth";
 
-export default () => {
+export default ({ setLogedIn }) => {
   const navigate = useNavigate();
 
   const goToLoginPage = () => navigate("/login");
 
-  const gotToHome = () => navigate("/home");
+  const goToHome = () => navigate("/home");
 
   const id = (id) => document.getElementById(id);
   const classes = (classes) => document.getElementsByClassName(classes);
 
-  useEffect(() => {
-    const engine = (id, serial, message1, message2) => {
+  useEffect(async () => {
+    const engine = (id, serial, message1, match, message2) => {
       const errorMsg = classes("error"),
         successIcon = classes("success-icon"),
         failureIcon = classes("failure-icon");
@@ -24,22 +25,55 @@ export default () => {
         failureIcon[serial].style.opacity = "1";
         successIcon[serial].style.opacity = "0";
       } else {
-        errorMsg[serial].innerHTML = "";
-        id.style.border = "2px solid green";
+        console.log(match);
+        if (match) {
+          errorMsg[serial].innerHTML = message2;
 
-        failureIcon[serial].style.opacity = "0";
-        successIcon[serial].style.opacity = "1";
+          failureIcon[serial].style.opacity = "1";
+          successIcon[serial].style.opacity = "0";
+        } else {
+          errorMsg[serial].innerHTML = "";
+          id.style.border = "2px solid green";
+
+          failureIcon[serial].style.opacity = "0";
+          successIcon[serial].style.opacity = "1";
+        }
       }
     };
 
-    const login = (e) => {
+    const login = async (e) => {
       e.preventDefault();
-
-      let email = id("email"),
+      const email = id("email"),
         password = id("password");
 
-      engine(email, 0, "Email cannot be blank");
-      engine(password, 1, "Password cannot be blank");
+      const isLogin = await getAdminLogin(email.value, password.value);
+      console.log(isLogin.message);
+
+      const emailIsIncorrect =
+        isLogin.message == "email incorrect" ? true : false;
+      const passwordIsIncorrect =
+        isLogin.message == "password incorrect" ? true : false;
+
+      engine(
+        email,
+        0,
+        "Email cannot be blank",
+        emailIsIncorrect,
+        "email is incorrect"
+      );
+      engine(
+        password,
+        1,
+        "Password cannot be blank",
+        passwordIsIncorrect,
+        "password incorrect"
+      );
+
+      if (!emailIsIncorrect && !passwordIsIncorrect) {
+        window.sessionStorage.setItem("email", email.value);
+        setLogedIn(true);
+        goToHome();
+      }
     };
 
     const form = id("form");
@@ -51,7 +85,7 @@ export default () => {
 
   return (
     <StyledContainer>
-      <button className="exit" onClick={gotToHome}>
+      <button className="exit" onClick={goToHome}>
         <i className="fas fa-times"></i>
       </button>
       <StyledContent>
