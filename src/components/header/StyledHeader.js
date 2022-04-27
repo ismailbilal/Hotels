@@ -15,18 +15,10 @@ const StyledHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
-  /* .fa-user {
-    font-size: 2em;
-    cursor: pointer;
-    &:hover {
-      color: var(--primary);
-    }
-  } */
   .checkbox:checked + .label .ball {
     transform: translateX(24px);
   }
   .rigthSection {
-    /* border: 1px solid; */
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -76,22 +68,60 @@ const StyledHeader = styled.div`
       }
     }
     .sessionButton {
+      position: relative;
       button {
         color: var(--primary);
         background-color: transparent;
         border: none;
         padding: 0.3rem 0.7rem;
+        cursor: pointer;
         .fa-user {
           color: var(--background);
           background-color: var(--primary);
           border-radius: 50%;
           padding: 5px;
         }
-        :hover {
-          background-color: rgba(0, 0, 0, 0.1);
-        }
         span {
           margin: 0 0.5rem;
+        }
+      }
+      .userOptions {
+        position: absolute;
+        width: 150px;
+        right: 0;
+        top: 50px;
+        background-color: var(--background);
+        padding: 0.5rem;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        display: none;
+        ul {
+          list-style: none;
+          li {
+            width: 100%;
+            cursor: pointer;
+            :hover {
+              background-color: rgba(0, 0, 0, 0.1);
+            }
+            button {
+              width: 100%;
+              text-align: left;
+            }
+          }
+          .logout {
+            button {
+              color: var(--secondary-variant);
+            }
+          }
+        }
+      }
+      :focus-within,
+      :hover {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+      :focus-within {
+        .userOptions {
+          display: block;
         }
       }
     }

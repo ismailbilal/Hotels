@@ -18,6 +18,7 @@ export default () => {
       ? true
       : false
   );
+  console.log(logedIn);
   const sessionType = window.sessionStorage.getItem("email")
     ? "admin"
     : window.sessionStorage.getItem("username")
@@ -27,7 +28,11 @@ export default () => {
   return (
     <div className="App">
       <Router>
-        <Header logedIn={logedIn} sessionType={sessionType} />
+        <Header
+          logedIn={logedIn}
+          sessionType={sessionType}
+          setLogedIn={setLogedIn}
+        />
         <Routes>
           <Route exact path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<Home />} />

@@ -1,13 +1,26 @@
-import { useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { StyledHeader, StyledLogo } from "./StyledHeader";
 
-export default ({ logedIn, sessionType }) => {
+export default ({ logedIn, sessionType, setLogedIn }) => {
   const navigate = useNavigate();
+  const [, updateState] = useState();
+  const forceUpdate = useCallback(() => updateState({}), []);
 
   const gotToLoginPage = () => navigate("/login");
   const gotToSignupPage = () => navigate("/signup");
+  // const goToHome = () => navigate("/");
   const extructUserFromEmail = (email) => (email ? email.split("@")[0] : "");
+
+  const logout = () => {
+    // console.log("hello");
+    window.sessionStorage.removeItem("email");
+    window.sessionStorage.removeItem("username");
+    setLogedIn(false);
+    // goToHome();
+    // forceUpdate();
+  };
+
   useEffect(() => {
     const changeTheme = () => {
       const elements = document.querySelectorAll(".changeable");
@@ -46,8 +59,15 @@ export default ({ logedIn, sessionType }) => {
                   ? extructUserFromEmail(window.sessionStorage.getItem("email"))
                   : window.sessionStorage.getItem("username")}
               </span>
-              <i class="fas fa-caret-down"></i>
+              <i className="fas fa-caret-down"></i>
             </button>
+            <div className="userOptions">
+              <ul>
+                <li className="logout" onClick={logout}>
+                  <button>Log out</button>
+                </li>
+              </ul>
+            </div>
           </div>
         )}
         {!logedIn && (
