@@ -1,25 +1,100 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { getUserLogin } from "../../API";
 import { StyledContainer, StyledContent, StyledForm } from "./StyledFormAuth";
 
-export default () => {
+export default ({ setLogedIn }) => {
   const navigate = useNavigate();
 
   const gotToAdminLogin = () => navigate("/admin/login");
+  const goToHome = () => navigate("/home");
+  const goToSignUpPage = () => navigate("/signup");
 
-  const gotToHome = () => navigate("/home");
+  const id = (id) => document.getElementById(id);
+  const classes = (classes) => document.getElementsByClassName(classes);
 
-  const login = (e) => {
-    e.preventDefault();
-  };
+  useEffect(async () => {
+    const engine = (id, serial, message1, match, message2) => {
+      const errorMsg = classes("error"),
+        successIcon = classes("success-icon"),
+        failureIcon = classes("failure-icon");
+      if (id.value.trim() == "") {
+        errorMsg[serial].innerHTML = message1;
+        id.style.border = "2px solid red";
 
-  const goToSignUpPage = () => {
-    navigate("/signup");
-  };
+        failureIcon[serial].style.opacity = "1";
+        successIcon[serial].style.opacity = "0";
+        return false;
+      } else {
+        console.log(match);
+        if (match) {
+          errorMsg[serial].innerHTML = message2;
+          id.style.border = "2px solid red";
+
+          failureIcon[serial].style.opacity = "1";
+          successIcon[serial].style.opacity = "0";
+          return false;
+        } else {
+          errorMsg[serial].innerHTML = "";
+          id.style.border = "2px solid green";
+
+          failureIcon[serial].style.opacity = "0";
+          successIcon[serial].style.opacity = "1";
+          return true;
+        }
+      }
+    };
+
+    const login = async (e) => {
+      e.preventDefault();
+      const username = id("username"),
+        password = id("password");
+
+      const isLogin = await getUserLogin(username.value, password.value);
+      console.log(isLogin.message);
+
+      const usernameIsIncorrect =
+        isLogin.message == "username incorrect" ? true : false;
+      const passwordIsIncorrect =
+        isLogin.message == "password incorrect" ? true : false;
+
+      if (
+        engine(
+          username,
+          0,
+          "username cannot be blank",
+          usernameIsIncorrect,
+          "username is incorrect"
+        )
+      ) {
+        engine(
+          password,
+          1,
+          "Password cannot be blank",
+          passwordIsIncorrect,
+          "password incorrect"
+        );
+      } else {
+        password.value = "";
+      }
+
+      if (!usernameIsIncorrect && !passwordIsIncorrect) {
+        window.sessionStorage.setItem("username", username.value);
+        setLogedIn(true);
+        goToHome();
+      }
+    };
+
+    const form = id("form");
+    form.addEventListener("submit", login);
+    return () => {
+      form.removeEventListener("submit", login);
+    };
+  }, []);
 
   return (
     <StyledContainer>
-      <button className="exit" onClick={gotToHome}>
+      <button className="exit" onClick={goToHome}>
         <i className="fas fa-times"></i>
       </button>
       <StyledContent>
@@ -32,7 +107,7 @@ export default () => {
           attractive offers today !
         </div>
       </StyledContent>
-      <StyledForm id="form" onSubmit={login}>
+      <StyledForm id="form">
         <div className="social">
           <div className="title">Get Started</div>
           <div className="question">

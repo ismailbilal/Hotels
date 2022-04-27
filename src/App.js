@@ -31,8 +31,14 @@ export default () => {
         <Routes>
           <Route exact path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/login" element={<FormSignIn />} />
-          <Route path="/signup" element={<FormSignUp />} />
+          <Route
+            path="/login"
+            element={<FormSignIn setLogedIn={setLogedIn} />}
+          />
+          <Route
+            path="/signup"
+            element={<FormSignUp setLogedIn={setLogedIn} />}
+          />
           <Route
             path="/admin/login"
             element={<FormAdmin setLogedIn={setLogedIn} />}

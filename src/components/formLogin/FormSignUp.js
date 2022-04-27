@@ -1,23 +1,100 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import FormSignIn from "./FormSignIn";
+import { createAccount } from "../../API";
 import { StyledContainer, StyledForm, StyledContent } from "./StyledFormAuth";
 
-export default () => {
+export default ({ setLogedIn }) => {
   const navigate = useNavigate();
 
-  const gotToHome = () => navigate("/home");
+  const goToHome = () => navigate("/home");
+  const gotToLoginPage = () => navigate("/login");
 
-  const gotToLoginPage = () => {
-    navigate("/login");
-  };
+  const id = (id) => document.getElementById(id);
+  const classes = (classes) => document.getElementsByClassName(classes);
 
-  const login = (e) => {
-    e.preventDefault();
-  };
+  useEffect(async () => {
+    const engine = (id, serial, message1, match, message2) => {
+      const errorMsg = classes("error"),
+        successIcon = classes("success-icon"),
+        failureIcon = classes("failure-icon");
+      if (id.value.trim() == "") {
+        errorMsg[serial].innerHTML = message1;
+        id.style.border = "2px solid red";
+
+        failureIcon[serial].style.opacity = "1";
+        successIcon[serial].style.opacity = "0";
+        return false;
+      } else {
+        console.log(match);
+        if (match) {
+          errorMsg[serial].innerHTML = message2;
+          id.style.border = "2px solid red";
+
+          failureIcon[serial].style.opacity = "1";
+          successIcon[serial].style.opacity = "0";
+          return false;
+        } else {
+          errorMsg[serial].innerHTML = "";
+          id.style.border = "2px solid green";
+
+          failureIcon[serial].style.opacity = "0";
+          successIcon[serial].style.opacity = "1";
+          return true;
+        }
+      }
+    };
+
+    const login = async (e) => {
+      e.preventDefault();
+      const username = id("username"),
+        email = id("email"),
+        password = id("password");
+
+      const isSignUp = await createAccount(username.value, password.value);
+      console.log(isSignUp.message);
+
+      const usernameExist = isSignUp.message == "username exist" ? true : false;
+      const emailExist = isSignUp.message == "email exist" ? true : false;
+
+      let acceptedUsername = engine(
+        username,
+        0,
+        "username cannot be blank",
+        usernameExist,
+        "username already exist"
+      );
+      let acceptedEmail = engine(
+        email,
+        1,
+        "email cannot be blank",
+        emailExist,
+        "email already exist"
+      );
+      let acceptedPassword = engine(
+        password,
+        2,
+        "Password cannot be blank",
+        false,
+        ""
+      );
+
+      if (acceptedEmail && acceptedPassword && acceptedUsername) {
+        window.sessionStorage.setItem("username", username.value);
+        setLogedIn(true);
+        goToHome();
+      }
+    };
+
+    const form = id("form");
+    form.addEventListener("submit", login);
+    return () => {
+      form.removeEventListener("submit", login);
+    };
+  }, []);
+
   return (
     <StyledContainer>
-      <button className="exit" onClick={gotToHome}>
+      <button className="exit" onClick={goToHome}>
         <i className="fas fa-times"></i>
       </button>
       <StyledContent>
@@ -30,7 +107,7 @@ export default () => {
           attractive offers today !
         </div>
       </StyledContent>
-      <StyledForm id="form" onSubmit={login}>
+      <StyledForm id="form">
         <div className="social">
           <div className="title">Get Started</div>
           <div className="question">

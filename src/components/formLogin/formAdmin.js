@@ -7,7 +7,6 @@ export default ({ setLogedIn }) => {
   const navigate = useNavigate();
 
   const goToLoginPage = () => navigate("/login");
-
   const goToHome = () => navigate("/home");
 
   const id = (id) => document.getElementById(id);
@@ -24,19 +23,23 @@ export default ({ setLogedIn }) => {
 
         failureIcon[serial].style.opacity = "1";
         successIcon[serial].style.opacity = "0";
+        return false;
       } else {
         console.log(match);
         if (match) {
           errorMsg[serial].innerHTML = message2;
+          id.style.border = "2px solid red";
 
           failureIcon[serial].style.opacity = "1";
           successIcon[serial].style.opacity = "0";
+          return false;
         } else {
           errorMsg[serial].innerHTML = "";
           id.style.border = "2px solid green";
 
           failureIcon[serial].style.opacity = "0";
           successIcon[serial].style.opacity = "1";
+          return true;
         }
       }
     };
@@ -54,20 +57,25 @@ export default ({ setLogedIn }) => {
       const passwordIsIncorrect =
         isLogin.message == "password incorrect" ? true : false;
 
-      engine(
-        email,
-        0,
-        "Email cannot be blank",
-        emailIsIncorrect,
-        "email is incorrect"
-      );
-      engine(
-        password,
-        1,
-        "Password cannot be blank",
-        passwordIsIncorrect,
-        "password incorrect"
-      );
+      if (
+        engine(
+          email,
+          0,
+          "Email cannot be blank",
+          emailIsIncorrect,
+          "email is incorrect"
+        )
+      ) {
+        engine(
+          password,
+          1,
+          "Password cannot be blank",
+          passwordIsIncorrect,
+          "password incorrect"
+        );
+      } else {
+        password.value = "";
+      }
 
       if (!emailIsIncorrect && !passwordIsIncorrect) {
         window.sessionStorage.setItem("email", email.value);
