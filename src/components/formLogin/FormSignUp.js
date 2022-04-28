@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { createAccount } from "../../API";
+import { accepted, createAccount } from "../../API";
 import { StyledContainer, StyledForm, StyledContent } from "./StyledFormAuth";
 
 export default ({ setLogedIn }) => {
@@ -23,7 +23,6 @@ export default ({ setLogedIn }) => {
 
         failureIcon[serial].style.opacity = "1";
         successIcon[serial].style.opacity = "0";
-        return false;
       } else {
         console.log(match);
         if (match) {
@@ -32,14 +31,12 @@ export default ({ setLogedIn }) => {
 
           failureIcon[serial].style.opacity = "1";
           successIcon[serial].style.opacity = "0";
-          return false;
         } else {
           errorMsg[serial].innerHTML = "";
           id.style.border = "2px solid green";
 
           failureIcon[serial].style.opacity = "0";
           successIcon[serial].style.opacity = "1";
-          return true;
         }
       }
     };
@@ -50,35 +47,30 @@ export default ({ setLogedIn }) => {
         email = id("email"),
         password = id("password");
 
-      const isSignUp = await createAccount(username.value, password.value);
+      const isSignUp = await accepted(
+        username.value,
+        email.value,
+        password.value
+      );
       console.log(isSignUp.message);
 
-      const usernameExist = isSignUp.message == "username exist" ? true : false;
-      const emailExist = isSignUp.message == "email exist" ? true : false;
+      const usernameExist =
+        isSignUp.message == "Username already exist" ? true : false;
+      const emailExist =
+        isSignUp.message == "Email already exist" ? true : false;
 
-      let acceptedUsername = engine(
+      engine(
         username,
         0,
-        "username cannot be blank",
+        "Username cannot be blank",
         usernameExist,
-        "username already exist"
+        isSignUp.message
       );
-      let acceptedEmail = engine(
-        email,
-        1,
-        "email cannot be blank",
-        emailExist,
-        "email already exist"
-      );
-      let acceptedPassword = engine(
-        password,
-        2,
-        "Password cannot be blank",
-        false,
-        ""
-      );
+      engine(email, 1, "Email cannot be blank", emailExist, isSignUp.message);
+      engine(password, 2, "Password cannot be blank", false, "");
 
-      if (acceptedEmail && acceptedPassword && acceptedUsername) {
+      if (isSignUp.message == "accepted") {
+        await createAccount(username.value, email.value, password.value);
         window.sessionStorage.setItem("username", username.value);
         setLogedIn(true);
         goToHome();

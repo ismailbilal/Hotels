@@ -31,6 +31,23 @@ export const createAccount = async (username, email, password) => {
   return data;
 };
 
+export const accepted = async (username, email, password) => {
+  const res = await fetch(API_BASE + "/user/accepted", {
+    method: "POST",
+    mode: "cors",
+    body: JSON.stringify({
+      username: username,
+      email: email,
+      password: password,
+    }),
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  });
+  const data = res.json();
+  return data;
+};
+
 export const getUserLogin = async (username, password) => {
   const res = await fetch(API_BASE + "/user/login", {
     method: "POST",
@@ -41,11 +58,5 @@ export const getUserLogin = async (username, password) => {
     },
   });
   const data = res.json();
-  return data;
-};
-
-export const getUsers = async () => {
-  const response = await fetch(API_BASE + "/user");
-  const data = await response.json();
   return data;
 };
