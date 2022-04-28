@@ -33,11 +33,21 @@ const Home = () => {
       <StyledContiner>
         <StyledItem bg={transparant}></StyledItem>
         <StyledItem className="changeable" primary>
-          hello
+          <div className="content">
+            <h1>Browse Hotels</h1>
+            <p>Here you can browse, search all existing hotels in fez</p>
+            <button>Go!</button>
+          </div>
+          <div className="image image1"></div>
         </StyledItem>
         <StyledItem bg={transparant}></StyledItem>
         <StyledItem className="changeable" primary>
-          hello
+          <div className="image image2"></div>
+          <div className="content">
+            <h1>Closest hotel</h1>
+            <p>Here you can find the closest hotels to your current location</p>
+            <button>Go!</button>
+          </div>
         </StyledItem>
       </StyledContiner>
     </StyledHome>
