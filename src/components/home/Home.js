@@ -5,12 +5,16 @@ import {
   StyledHome,
   StyledItem,
 } from "./StyledHome";
+import { useNavigate } from "react-router-dom";
 import backgroundImage1 from "../../images/homeBg.jpg";
 import backgroundImage2 from "../../images/homeBg2.jpg";
 const transparant = "rgba(0, 0, 0, .5)";
 
 const Home = () => {
+  const naigate = useNavigate();
   const [background, setBackground] = useState(backgroundImage1);
+
+  const goToBowsing = () => naigate("/browse");
 
   const changeBackground = () => {
     if (window.pageYOffset >= window.innerHeight) {
@@ -36,7 +40,7 @@ const Home = () => {
           <div className="content">
             <h1>Browse Hotels</h1>
             <p>Here you can browse, search all existing hotels in fez</p>
-            <button>Go!</button>
+            <button onClick={goToBowsing}>Go!</button>
           </div>
           <div className="image image1"></div>
         </StyledItem>

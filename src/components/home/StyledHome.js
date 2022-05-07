@@ -64,6 +64,7 @@ const StyledItem = styled.div`
       color: var(--on-primary);
       font-size: 1.5em;
       border-radius: 10px;
+      cursor: pointer;
     }
   }
   @media (max-width: 768px) {

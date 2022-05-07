@@ -5,6 +5,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import Browse from "./components/browse/Browse";
 import FormAdmin from "./components/formLogin/formAdmin";
 import FormSignIn from "./components/formLogin/FormSignIn";
 import FormSignUp from "./components/formLogin/FormSignUp";
@@ -18,7 +19,7 @@ export default () => {
       ? true
       : false
   );
-  console.log(logedIn);
+
   const sessionType = window.sessionStorage.getItem("email")
     ? "admin"
     : window.sessionStorage.getItem("username")
@@ -48,6 +49,7 @@ export default () => {
             path="/admin/login"
             element={<FormAdmin setLogedIn={setLogedIn} />}
           />
+          <Route path="/browse" element={<Browse />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>

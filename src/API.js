@@ -1,6 +1,8 @@
 // const API_BASE = process.env.REACT_APP_API_BASE;
 const API_BASE = "http://localhost:5000";
 
+console.log(process.env.REACT_APP_API_BASE);
+
 export const getAdminLogin = async (email, password) => {
   const res = await fetch(API_BASE + "/admin/login", {
     method: "POST",
@@ -58,5 +60,29 @@ export const getUserLogin = async (username, password) => {
     },
   });
   const data = res.json();
+  return data;
+};
+
+export const getHotels = async () => {
+  const res = await fetch(`${API_BASE}/hotel`);
+  const data = await res.json();
+  return data;
+};
+
+export const getLocation = async (hotelId) => {
+  const res = await fetch(`${API_BASE}/hotel/${hotelId}/location`);
+  const data = await res.json();
+  return data;
+};
+
+export const getCities = async () => {
+  const res = await fetch(`${API_BASE}/city`);
+  const data = await res.json();
+  return data;
+};
+
+export const getCityLocalities = async (cityId) => {
+  const res = await fetch(`${API_BASE}/city/${cityId}/locality`);
+  const data = await res.json();
   return data;
 };
