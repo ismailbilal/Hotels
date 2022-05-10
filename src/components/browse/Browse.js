@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getHotels } from "../../API";
-import { StyledBrowse, StyledFiltring } from "./StyledBrowse";
+import { StyledBrowse } from "./StyledBrowse";
 import List from "./List";
 import Filtring from "./Filtring";
 
@@ -18,7 +18,7 @@ export default () => {
 
   return (
     <StyledBrowse className="changeable">
-      <Filtring />
+      <Filtring setHotels={setHotels} />
       <List hotelsList={hotels?.slice(pageNumber - 1, pageNumber + 10)} />
     </StyledBrowse>
   );

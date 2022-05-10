@@ -18,8 +18,7 @@ const StyledFiltring = styled.form`
   flex-direction: column;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   padding: 1rem;
-  position: fixed;
-  height: 100vh;
+  /* height: 100vh; */
   background-color: var(--background);
   color: var(--on-background);
   @media (max-width: 768px) {
