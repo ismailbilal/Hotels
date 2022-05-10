@@ -1,6 +1,4 @@
 const API_BASE = process.env.REACT_APP_API_BASE;
-// const API_BASE = "http://localhost:5000";
-// const API_BASE = "http://192.168.1.8:5000";
 
 export const getAdminLogin = async (email, password) => {
   const res = await fetch(API_BASE + "/admin/login", {
