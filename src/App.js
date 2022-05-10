@@ -11,6 +11,7 @@ import FormSignIn from "./components/formLogin/FormSignIn";
 import FormSignUp from "./components/formLogin/FormSignUp";
 import Header from "./components/header/Header";
 import Home from "./components/home/Home";
+import Hotel from "./components/hotel/Hotel";
 
 export default () => {
   const [logedIn, setLogedIn] = useState(
@@ -50,6 +51,7 @@ export default () => {
             element={<FormAdmin setLogedIn={setLogedIn} />}
           />
           <Route path="/browse" element={<Browse />} />
+          <Route path="/browse/hotel/:id" element={<Hotel />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>

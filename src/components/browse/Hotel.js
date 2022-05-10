@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { getLocation } from "../../API";
 import { StyledImage, StyledItem } from "./StyledBrowse";
 
 export default ({ hotel }) => {
+  const navigate = useNavigate();
   const [location, setLocation] = useState({});
+
+  const goToHotelDetail = () => navigate(`/browse/hotel/${hotel._id}`);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -12,10 +16,10 @@ export default ({ hotel }) => {
     };
     fetchData().catch(console.error);
     return () => {};
-  }, []);
+  }, [hotel]);
 
   return (
-    <StyledItem>
+    <StyledItem onClick={goToHotelDetail}>
       <div className="image">
         <StyledImage imageUrl={hotel.imageUrl} />
       </div>
@@ -42,7 +46,7 @@ export default ({ hotel }) => {
             </a>
           </p>
         )}
-        {location.address && <p>{location.address}</p>}
+        <p>{location?.address}</p>
       </div>
     </StyledItem>
   );
