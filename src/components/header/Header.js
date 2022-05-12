@@ -1,24 +1,19 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { RenderIf } from "../../utilities/RenderIf";
 import { StyledHeader, StyledLogo } from "./StyledHeader";
 
 export default ({ logedIn, sessionType, setLogedIn }) => {
   const navigate = useNavigate();
-  const [, updateState] = useState();
-  const forceUpdate = useCallback(() => updateState({}), []);
 
   const gotToLoginPage = () => navigate("/login");
   const gotToSignupPage = () => navigate("/signup");
-  // const goToHome = () => navigate("/");
   const extructUserFromEmail = (email) => (email ? email.split("@")[0] : "");
 
   const logout = () => {
-    // console.log("hello");
     window.sessionStorage.removeItem("email");
     window.sessionStorage.removeItem("username");
     setLogedIn(false);
-    // goToHome();
-    // forceUpdate();
   };
 
   useEffect(() => {
@@ -50,7 +45,7 @@ export default ({ logedIn, sessionType, setLogedIn }) => {
           <i className="fas fa-moon"></i>
           <div className="ball"></div>
         </label>
-        {logedIn && (
+        <RenderIf isTrue={logedIn}>
           <div className="sessionButton">
             <button>
               <i className="fas fa-user"></i>
@@ -69,8 +64,8 @@ export default ({ logedIn, sessionType, setLogedIn }) => {
               </ul>
             </div>
           </div>
-        )}
-        {!logedIn && (
+        </RenderIf>
+        <RenderIf isTrue={!logedIn}>
           <div className="logButtns">
             <button onClick={gotToSignupPage}>
               <i className="fas fa-user-plus"></i>
@@ -81,7 +76,7 @@ export default ({ logedIn, sessionType, setLogedIn }) => {
               <span> Sign In</span>
             </button>
           </div>
-        )}
+        </RenderIf>
       </div>
     </StyledHeader>
   );
