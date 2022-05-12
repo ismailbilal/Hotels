@@ -8,6 +8,7 @@ export default ({ logedIn, sessionType, setLogedIn }) => {
 
   const gotToLoginPage = () => navigate("/login");
   const gotToSignupPage = () => navigate("/signup");
+  const gotToHome = () => navigate("/home");
   const extructUserFromEmail = (email) => (email ? email.split("@")[0] : "");
 
   const logout = () => {
@@ -34,7 +35,7 @@ export default ({ logedIn, sessionType, setLogedIn }) => {
 
   return (
     <StyledHeader className="changeable">
-      <StyledLogo>
+      <StyledLogo onClick={gotToHome}>
         <i className="fas fa-hotel"></i>
         <span> Hotel</span>
       </StyledLogo>

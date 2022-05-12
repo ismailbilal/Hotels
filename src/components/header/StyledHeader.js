@@ -152,6 +152,7 @@ const StyledLogo = styled.div`
   transform: scale(1.5);
   padding: 0.2rem;
   margin-left: 16.5px;
+  cursor: pointer;
 `;
 
 export { StyledHeader, StyledLogo };
