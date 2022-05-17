@@ -6,7 +6,7 @@ import { StyledContainer, StyledContent, StyledForm } from "./StyledFormAuth";
 export default ({ setLogedIn }) => {
   const navigate = useNavigate();
 
-  const goToLoginPage = () => navigate("/login");
+  const goToLoginPage = () => navigate("/login", { replace: true });
   const goToPrevPage = () => navigate(-1);
 
   const id = (id) => document.getElementById(id);

@@ -7,7 +7,7 @@ export default ({ setLogedIn }) => {
   const navigate = useNavigate();
 
   const goToPrevPage = () => navigate(-1);
-  const gotToLoginPage = () => navigate("/login");
+  const gotToLoginPage = () => navigate("/login", { replace: true });
 
   const id = (id) => document.getElementById(id);
   const classes = (classes) => document.getElementsByClassName(classes);

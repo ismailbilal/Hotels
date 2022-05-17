@@ -6,9 +6,9 @@ import { StyledContainer, StyledContent, StyledForm } from "./StyledFormAuth";
 export default ({ setLogedIn }) => {
   const navigate = useNavigate();
 
-  const gotToAdminLogin = () => navigate("/admin/login");
+  const gotToAdminLogin = () => navigate("/admin/login", { replace: true });
   const goToPrevPage = () => navigate(-1);
-  const goToSignUpPage = () => navigate("/signup");
+  const goToSignUpPage = () => navigate("/signup", { replace: true });
 
   const id = (id) => document.getElementById(id);
   const classes = (classes) => document.getElementsByClassName(classes);
