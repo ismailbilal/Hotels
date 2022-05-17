@@ -5,7 +5,7 @@ import Detail from "./Detail";
 import Map from "./Map";
 import { StyledHotel } from "./StyledHotel";
 
-export default () => {
+export default ({ logedIn }) => {
   const { id } = useParams();
   const [location, setLocation] = useState(null);
 
@@ -19,7 +19,7 @@ export default () => {
 
   return (
     <StyledHotel>
-      <Detail hotelId={id} />
+      <Detail hotelId={id} hotelLocation={location} logedIn={logedIn} />
       <Map lati={location?.lat} long={location?.lon} />
     </StyledHotel>
   );
