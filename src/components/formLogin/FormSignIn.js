@@ -7,7 +7,7 @@ export default ({ setLogedIn }) => {
   const navigate = useNavigate();
 
   const gotToAdminLogin = () => navigate("/admin/login");
-  const goToHome = () => navigate("/home");
+  const goToPrevPage = () => navigate(-1);
   const goToSignUpPage = () => navigate("/signup");
 
   const id = (id) => document.getElementById(id);
@@ -81,7 +81,7 @@ export default ({ setLogedIn }) => {
       if (!usernameIsIncorrect && !passwordIsIncorrect) {
         window.sessionStorage.setItem("username", username.value);
         setLogedIn(true);
-        goToHome();
+        goToPrevPage();
       }
     };
 
@@ -94,7 +94,7 @@ export default ({ setLogedIn }) => {
 
   return (
     <StyledContainer>
-      <button className="exit" onClick={goToHome}>
+      <button className="exit" onClick={goToPrevPage}>
         <i className="fas fa-times"></i>
       </button>
       <StyledContent>

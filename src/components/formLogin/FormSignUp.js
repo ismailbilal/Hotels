@@ -6,7 +6,7 @@ import { StyledContainer, StyledForm, StyledContent } from "./StyledFormAuth";
 export default ({ setLogedIn }) => {
   const navigate = useNavigate();
 
-  const goToHome = () => navigate("/home");
+  const goToPrevPage = () => navigate(-1);
   const gotToLoginPage = () => navigate("/login");
 
   const id = (id) => document.getElementById(id);
@@ -73,7 +73,7 @@ export default ({ setLogedIn }) => {
         await createAccount(username.value, email.value, password.value);
         window.sessionStorage.setItem("username", username.value);
         setLogedIn(true);
-        goToHome();
+        goToPrevPage();
       }
     };
 
@@ -86,7 +86,7 @@ export default ({ setLogedIn }) => {
 
   return (
     <StyledContainer>
-      <button className="exit" onClick={goToHome}>
+      <button className="exit" onClick={goToPrevPage}>
         <i className="fas fa-times"></i>
       </button>
       <StyledContent>
