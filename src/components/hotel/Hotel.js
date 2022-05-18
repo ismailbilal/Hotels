@@ -19,7 +19,7 @@ export default ({ logedIn }) => {
 
   return (
     <StyledHotel>
-      <Detail hotelId={id} hotelLocation={location} logedIn={logedIn} />
+      <Detail hotelId={id} hotelLocation={location} />
       <Map lati={location?.lat} long={location?.lon} />
     </StyledHotel>
   );
