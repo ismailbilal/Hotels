@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { RenderIf } from "../../utilities/RenderIf";
 import { StyledHeader, StyledLogo } from "./StyledHeader";
@@ -21,7 +21,6 @@ export default ({ logedIn, sessionType, setLogedIn }) => {
     const changeTheme = () => {
       const elements = document.querySelectorAll(".changeable");
       elements.forEach((ele) => {
-        console.log(ele);
         ele.classList.toggle("dark");
       });
     };
