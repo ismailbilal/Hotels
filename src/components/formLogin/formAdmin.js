@@ -80,7 +80,7 @@ export default ({ setLogedIn }) => {
       if (!emailIsIncorrect && !passwordIsIncorrect) {
         window.sessionStorage.setItem("email", email.value);
         setLogedIn(true);
-        goToLoginPage();
+        goToPrevPage();
       }
     };
 
