@@ -3,14 +3,21 @@ import styled from "styled-components";
 const StyledHotel = styled.div`
   position: absolute;
   top: 70px;
-  width: 100vw;
-  height: calc(100vh - 70px);
+  min-width: 100%;
+  min-height: calc(100vh - 70px);
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding: 1rem;
-  gap: 1rem;
-  @media (max-width: 768px) {
-    flex-direction: column;
+  gap: 2rem;
+  .mapDetail {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+  @media (max-width: 786px) {
+    & .mapDetail {
+      flex-direction: column;
+    }
   }
 `;
 
@@ -36,7 +43,7 @@ const StyledMap = styled.div`
   }
   @media (max-width: 768px) {
     width: 100%;
-    min-height: 70vh;
+    height: 50vh;
   }
   & .mapboxgl-ctrl-bottom-left,
   & .mapboxgl-ctrl-bottom-right {
@@ -52,10 +59,13 @@ const StyledDetail = styled.div`
   width: 40%;
   display: flex;
   flex-direction: column;
+  min-height: 100%;
   & .info {
+    height: 100%;
     padding: 1rem;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 0.5rem;
     & form {
       display: flex;
@@ -103,6 +113,7 @@ const StyledDetail = styled.div`
   }
   @media (max-width: 768px) {
     width: 100%;
+    order: 2;
   }
 `;
 
@@ -175,4 +186,57 @@ const StyledRating = styled.div`
   }
 `;
 
-export { StyledHotel, StyledMap, StyledDetail, StyledImage, StyledRating };
+const StyledReviewList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+const StyledReview = styled.div`
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  & h4 {
+    color: var(--secondary-variant);
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+    & .fas {
+      font-size: 1.5em;
+    }
+  }
+  & .dateRating {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.7rem;
+    & em {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: sans-serif;
+      & .fa-star {
+        color: #ffc107;
+        font-size: 0.8em;
+      }
+    }
+  }
+  & p {
+    padding: 1rem;
+    opacity: 0.9;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+`;
+
+export {
+  StyledHotel,
+  StyledMap,
+  StyledDetail,
+  StyledImage,
+  StyledRating,
+  StyledReviewList,
+  StyledReview,
+};

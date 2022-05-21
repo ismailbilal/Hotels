@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getLocation } from "../../API";
 import Detail from "./Detail";
 import Map from "./Map";
+import ReviewList from "./ReviewList";
 import { StyledHotel } from "./StyledHotel";
 
 export default ({ logedIn }) => {
@@ -19,8 +20,11 @@ export default ({ logedIn }) => {
 
   return (
     <StyledHotel>
-      <Detail hotelId={id} hotelLocation={location} />
-      <Map lati={location?.lat} long={location?.lon} />
+      <div className="mapDetail">
+        <Detail hotelId={id} hotelLocation={location} />
+        <Map lati={location?.lat} long={location?.lon} />
+      </div>
+      <ReviewList hotelId={id} />
     </StyledHotel>
   );
 };

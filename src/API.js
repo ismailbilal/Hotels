@@ -117,3 +117,9 @@ export const getUserId = async (username) => {
   const data = await res.json();
   return data;
 };
+
+export const getReviews = async (hotelId) => {
+  const res = await fetch(`${API_BASE}/hotel/${hotelId}/reviews`);
+  const data = await res.json();
+  return data;
+};
