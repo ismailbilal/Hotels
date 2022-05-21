@@ -10,7 +10,7 @@ export default ({ lati, long }) => {
   const map = useRef(null);
   const [lng, setLng] = useState(-5);
   const [lat, setLat] = useState(34);
-  const [zoom, setZoom] = useState(16);
+  const [zoom, setZoom] = useState(14.5);
 
   useEffect(() => {
     if (map.current) return;
