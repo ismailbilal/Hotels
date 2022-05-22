@@ -97,19 +97,15 @@ const StyledHeader = styled.div`
         display: none;
         ul {
           list-style: none;
-          li {
+          & li {
             width: 100%;
             cursor: pointer;
             :hover {
               background-color: rgba(0, 0, 0, 0.1);
             }
-            button {
+            & button {
               width: 100%;
               text-align: left;
-            }
-          }
-          .logout {
-            button {
               color: var(--secondary-variant);
             }
           }

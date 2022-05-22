@@ -6,6 +6,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import Browse from "./components/browse/Browse";
+import FormAddHotel from "./components/formAddHotel/FormAddHotel";
 import FormAdmin from "./components/formLogin/formAdmin";
 import FormSignIn from "./components/formLogin/FormSignIn";
 import FormSignUp from "./components/formLogin/FormSignUp";
@@ -52,6 +53,12 @@ export default () => {
           />
           <Route path="/browse" element={<Browse />} />
           <Route path="/browse/hotel/:id" element={<Hotel />} />
+          <Route
+            path="/admin/addhotel"
+            element={
+              sessionType == "admin" ? <FormAddHotel /> : <Navigate to="/" />
+            }
+          />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>

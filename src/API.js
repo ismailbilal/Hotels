@@ -123,3 +123,43 @@ export const getReviews = async (hotelId) => {
   const data = await res.json();
   return data;
 };
+
+export const addHotel = async (hotel) => {
+  const res = await fetch(`${API_BASE}/hotel`, {
+    method: "POST",
+    mode: "cors",
+    body: JSON.stringify(hotel),
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  });
+  const data = res.json();
+  return data;
+};
+
+export const addLocation = async (location) => {
+  const res = await fetch(`${API_BASE}/location`, {
+    method: "POST",
+    mode: "cors",
+    body: JSON.stringify(location),
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  });
+  const data = res.json();
+  return data;
+};
+
+export const addLocationToHotel = async (hotelId, locationId) => {
+  const res = await fetch(
+    `${API_BASE}/hotel/${hotelId}/Location/${locationId}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    }
+  );
+  const data = await res.json();
+  return data;
+};
