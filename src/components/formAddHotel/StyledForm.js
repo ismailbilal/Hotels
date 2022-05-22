@@ -43,11 +43,16 @@ const StyledForm = styled.form`
         &:focus {
           border-color: var(--primary);
         }
-        max-width: 50%;
+        max-width: 100%;
       }
     }
     & .inlineDiv {
       max-width: calc(50% - 1rem);
+      & input,
+      & select {
+        max-width: 50%;
+        margin-top: 0.5rem;
+      }
     }
   }
   & button {
@@ -64,7 +69,6 @@ const StyledForm = styled.form`
   }
   @media (max-width: 786px) {
     & .divInput {
-      /* border: 1px solid; */
       flex-direction: column;
       gap: 0;
       align-items: flex-start;
