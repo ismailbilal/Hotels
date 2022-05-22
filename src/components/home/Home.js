@@ -17,7 +17,8 @@ const Home = () => {
   const goToBowsing = () => naigate("/browse");
 
   const changeBackground = () => {
-    if (window.pageYOffset >= window.innerHeight) {
+    console.log(window.pageYOffset);
+    if (window.pageYOffset >= window.innerHeight * 0.7) {
       setBackground(backgroundImage2);
     } else {
       setBackground(backgroundImage1);
@@ -45,7 +46,7 @@ const Home = () => {
           <div className="image image1"></div>
         </StyledItem>
         <StyledItem bg={transparant}></StyledItem>
-        <StyledItem className="changeable" primary>
+        <StyledItem className="changeable" primary style={{ height: "80vh" }}>
           <div className="image image2"></div>
           <div className="content">
             <h1>Closest hotel</h1>

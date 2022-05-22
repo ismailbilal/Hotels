@@ -4,7 +4,7 @@ import image2 from "../../images/image2.svg";
 
 const StyledHome = styled.div`
   position: absolute;
-  top: 0;
+  top: 70px;
   width: 100%;
 `;
 
@@ -26,7 +26,7 @@ const StyledContiner = styled.div`
 
 const StyledItem = styled.div`
   width: 100%;
-  height: 100vh;
+  height: ${(props) => (props.primary ? "calc(100vh - 70px)" : "70vh")};
   background-color: ${(props) => props.bg || "var(--background)"};
   color: var(--on-background);
   display: flex;
