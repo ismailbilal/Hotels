@@ -77,33 +77,33 @@ export default () => {
     <StyledFormAddHotel>
       <StyledForm onChange={handleChange} onSubmit={handelSubmit}>
         <div className="info">
-          <div className="name">
+          <div className="name divInput">
             <label htmlFor="name">Name</label>
             <input type="text" name="name" id="name" />
           </div>
-          <div className="website">
+          <div className="website divInput">
             <label htmlFor="webSite">Web Site</label>
             <input type="text" name="webSite" id="webSite" />
           </div>
-          <div className="imageUrl">
+          <div className="imageUrl divInput">
             <label htmlFor="imageUrl">Image Url</label>
             <input type="text" name="imageUrl" id="imageUrl" />
           </div>
-          <div className="phoneNumber">
+          <div className="phoneNumber divInput">
             <label htmlFor="phone">Phone Number</label>
             <input type="text" name="phoneNumber" id="phone" />
           </div>
         </div>
         <div className="hotelAddress">
-          <div className="address">
+          <div className="address divInput">
             <label htmlFor="address">Adress</label>
             <input type="text" name="address" id="address" />
           </div>
-          <div className="plusCode">
+          <div className="plusCode divInput">
             <label htmlFor="plusCode">Plus Code</label>
             <input type="text" name="plusCode" id="plusCode" />
           </div>
-          <div className="cityLocality">
+          <div className="cityLocality divInput">
             <div className="inlineDiv">
               <label htmlFor="city">City</label>
               <select className="smallInput" name="cityId" id="city">
@@ -126,7 +126,7 @@ export default () => {
               </select>
             </div>
           </div>
-          <div className="location">
+          <div className="location divInput">
             <div className="inlineDiv">
               <label htmlFor="lon">Longitude</label>
               <input className="smallInput" type="text" name="lon" id="lon" />

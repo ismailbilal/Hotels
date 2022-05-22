@@ -5,16 +5,18 @@ const StyledFormAddHotel = styled.div`
   background: url(${bcg}) no-repeat center;
   background-size: cover;
   width: 100vw;
-  height: calc(100vh - 70px);
+  min-height: calc(100vh - 70px);
   position: absolute;
   top: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 1rem;
 `;
 
 const StyledForm = styled.form`
   width: clamp(500px, 70%, 700px);
+  max-width: 100%;
   background-color: var(--background);
   display: flex;
   flex-direction: column;
@@ -59,6 +61,18 @@ const StyledForm = styled.form`
       background-color: var(--primary-variant);
     }
     margin-top: 1.5rem;
+  }
+  @media (max-width: 786px) {
+    & .divInput {
+      /* border: 1px solid; */
+      flex-direction: column;
+      gap: 0;
+      align-items: flex-start;
+      & div {
+        /* border: 1px solid; */
+        min-width: 100%;
+      }
+    }
   }
 `;
 
