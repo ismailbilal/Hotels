@@ -11,13 +11,13 @@ import backgroundImage2 from "../../images/homeBg2.jpg";
 const transparant = "rgba(0, 0, 0, .5)";
 
 const Home = () => {
-  const naigate = useNavigate();
+  const navigate = useNavigate();
   const [background, setBackground] = useState(backgroundImage1);
 
-  const goToBowsing = () => naigate("/browse");
+  const goToBowsing = () => navigate("/browse");
+  const goToClosest = () => navigate("/closest");
 
   const changeBackground = () => {
-    console.log(window.pageYOffset);
     if (window.pageYOffset >= window.innerHeight * 0.7) {
       setBackground(backgroundImage2);
     } else {
@@ -51,7 +51,7 @@ const Home = () => {
           <div className="content">
             <h1>Closest hotel</h1>
             <p>Here you can find the closest hotels to your current location</p>
-            <button>Go!</button>
+            <button onClick={goToClosest}>Go!</button>
           </div>
         </StyledItem>
       </StyledContiner>

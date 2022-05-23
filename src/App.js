@@ -6,6 +6,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import Browse from "./components/browse/Browse";
+import Closest from "./components/closest/Closest";
 import FormAddHotel from "./components/formAddHotel/FormAddHotel";
 import FormAdmin from "./components/formLogin/formAdmin";
 import FormSignIn from "./components/formLogin/FormSignIn";
@@ -59,6 +60,7 @@ export default () => {
               sessionType == "admin" ? <FormAddHotel /> : <Navigate to="/" />
             }
           />
+          <Route path="/closest" element={<Closest />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>
