@@ -15,6 +15,7 @@ export default ({ hotelId, hotelLocation }) => {
   });
 
   const goToLoginPage = () => navigate("/login");
+  const reloadPage = () => navigate(0);
 
   const handleChanges = (e) => {
     const { name, value } = e.target;
@@ -34,7 +35,15 @@ export default ({ hotelId, hotelLocation }) => {
       errMsg.current.classList.remove("msgVisible");
       succMsg.current.classList.add("msgVisible");
       const userId = await getUserId(username);
-      await sendReview(userId, hotelId, review.rating, review.comment);
+      const res = await sendReview(
+        userId,
+        hotelId,
+        review.rating,
+        review.comment
+      );
+      if (res) {
+        reloadPage();
+      }
     }
   };
 

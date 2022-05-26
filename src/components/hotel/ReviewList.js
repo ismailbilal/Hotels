@@ -1,9 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { getReviews } from "../../API";
+import { deleteReviewFromDB, getReviews } from "../../API";
 import { StyledReview, StyledReviewList } from "./StyledHotel";
+import { RenderIf } from "../../utilities/RenderIf";
+import { useNavigate } from "react-router-dom";
 
 export default ({ hotelId }) => {
+  const navigate = useNavigate();
   const [list, setList] = useState(null);
+
+  const reloadPage = () => navigate(0);
+
+  const deleteReview = async (e, reviewId) => {
+    console.log(reviewId);
+    const res = await deleteReviewFromDB(reviewId);
+    if (res) {
+      reloadPage();
+    }
+  };
 
   useEffect(() => {
     const fetchList = async () => {
@@ -19,17 +32,24 @@ export default ({ hotelId }) => {
     <StyledReviewList>
       {list?.map((review, index) => (
         <StyledReview key={index}>
-          <h4>
-            <i className="fas fa-user-circle"></i>
-            {review?.username}
-          </h4>
-          <div className="dateRating">
-            <em>
-              <i className="fas fa-star"></i> {review?.rating.low}
-            </em>
-            <em>{`${review?.date?.day.low}/${review?.date?.month.low}/${review?.date?.year.low}`}</em>
+          <div className="review">
+            <h4>
+              <i className="fas fa-user-circle"></i>
+              {review?.username}
+            </h4>
+            <div className="dateRating">
+              <em>
+                <i className="fas fa-star"></i> {review?.rating.low}
+              </em>
+              <em>{`${review?.date?.day.low}/${review?.date?.month.low}/${review?.date?.year.low}`}</em>
+            </div>
+            <p>{review?.comment}</p>
           </div>
-          <p>{review?.comment}</p>
+          <RenderIf isTrue={window.sessionStorage.getItem("email")}>
+            <button onClick={(e) => deleteReview(e, review?._id)}>
+              <i className="fas fa-trash-alt"></i>
+            </button>
+          </RenderIf>
         </StyledReview>
       ))}
     </StyledReviewList>

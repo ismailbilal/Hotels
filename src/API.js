@@ -1,5 +1,5 @@
 const API_BASE = process.env.REACT_APP_API_BASE;
-// const API_BASE = "http://192.168.1.8:5000";
+// const API_BASE = "http://localhost:5000";
 
 export const getAdminLogin = async (email, password) => {
   const res = await fetch(API_BASE + "/admin/login", {
@@ -173,5 +173,18 @@ export const addLocationToHotel = async (hotelId, locationId) => {
     }
   );
   const data = await res.json();
+  return data;
+};
+
+export const deleteReviewFromDB = async (reviewId) => {
+  const res = await fetch(`${API_BASE}/admin/review/${reviewId}`, {
+    method: "DELETE",
+    mode: "cors",
+    body: JSON.stringify({}),
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  });
+  const data = res.json();
   return data;
 };

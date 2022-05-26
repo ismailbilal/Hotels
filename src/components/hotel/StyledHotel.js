@@ -196,38 +196,57 @@ const StyledReview = styled.div`
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   padding: 0.5rem;
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  & h4 {
-    color: var(--secondary-variant);
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+  & .review {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 0.5rem;
-    align-items: center;
-    & .fas {
-      font-size: 1.5em;
-    }
-  }
-  & .dateRating {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.7rem;
-    & em {
+    width: 100%;
+    & h4 {
+      color: var(--secondary-variant);
       display: flex;
+      flex-direction: row;
+      gap: 0.5rem;
       align-items: center;
-      gap: 5px;
-      font-family: sans-serif;
-      & .fa-star {
-        color: #ffc107;
-        font-size: 0.8em;
+      & .fas {
+        font-size: 1.5em;
       }
     }
+    & .dateRating {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.7rem;
+      & em {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-family: sans-serif;
+        & .fa-star {
+          color: #ffc107;
+          font-size: 0.8em;
+        }
+      }
+    }
+    & p {
+      padding: 1rem;
+      opacity: 0.9;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
   }
-  & p {
+  & button {
+    background-color: transparent;
+    border: none;
+    color: red;
+    font-size: 1.2em;
+    cursor: pointer;
     padding: 1rem;
-    opacity: 0.9;
-    background-color: rgba(0, 0, 0, 0.1);
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+    border-radius: 5px;
   }
 `;
 
