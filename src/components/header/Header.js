@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { RenderIf } from "../../utilities/RenderIf";
+import Logo from "./Logo";
 import { StyledHeader, StyledLogo } from "./StyledHeader";
 
 export default ({ logedIn, sessionType, setLogedIn }) => {
@@ -8,7 +9,6 @@ export default ({ logedIn, sessionType, setLogedIn }) => {
 
   const gotToLoginPage = () => navigate("/login");
   const gotToSignupPage = () => navigate("/signup");
-  const gotToHome = () => navigate("/home");
   const goToAddForm = () => navigate("/admin/addhotel");
   const extructUserFromEmail = (email) => (email ? email.split("@")[0] : "");
 
@@ -35,10 +35,7 @@ export default ({ logedIn, sessionType, setLogedIn }) => {
 
   return (
     <StyledHeader className="changeable">
-      <StyledLogo onClick={gotToHome}>
-        <i className="fas fa-hotel"></i>
-        <span> Hotel</span>
-      </StyledLogo>
+      <Logo primary />
       <div className="rigthSection">
         <input type="checkbox" className="checkbox" id="checkbox" />
         <label htmlFor="checkbox" className="label">

@@ -34,6 +34,7 @@ const StyledContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  align-items: baseline;
   background-color: var(--primary);
   width: 100%;
   min-height: 100vh;
@@ -44,11 +45,13 @@ const StyledContent = styled.div`
     background-size: contain;
     background-position: center;
     height: 65%;
+    width: 100%;
   }
   .text {
     text-align: center;
     color: white;
     font-size: 18px;
+    align-self: center;
   }
   @media (max-width: 768px) {
     .image {

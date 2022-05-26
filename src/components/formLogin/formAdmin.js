@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAdminLogin, getUsers } from "../../API.js";
+import Logo from "../header/Logo.js";
 import { StyledContainer, StyledContent, StyledForm } from "./StyledFormAuth";
 
 export default ({ setLogedIn }) => {
@@ -97,9 +98,7 @@ export default ({ setLogedIn }) => {
         <i className="fas fa-times"></i>
       </button>
       <StyledContent>
-        <div className="logo">
-          <img src="https://svgshare.com/i/_go.svg" alt="" />
-        </div>
+        <Logo />
         <div className="image"></div>
         <div className="text">
           Start for free & get <br />
