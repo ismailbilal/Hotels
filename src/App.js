@@ -14,6 +14,7 @@ import FormSignUp from "./components/formLogin/FormSignUp";
 import Header from "./components/header/Header";
 import Home from "./components/home/Home";
 import Hotel from "./components/hotel/Hotel";
+import Users from "./components/users/Users";
 
 export default () => {
   const [logedIn, setLogedIn] = useState(
@@ -61,6 +62,10 @@ export default () => {
             }
           />
           <Route path="/closest" element={<Closest />} />
+          <Route
+            path="/admin/users"
+            element={sessionType == "admin" ? <Users /> : <Navigate to="/" />}
+          />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>

@@ -1,8 +1,59 @@
 const API_BASE = process.env.REACT_APP_API_BASE;
 // const API_BASE = "http://localhost:5000";
 
+export const getAllUsers = async () => {
+  const res = await fetch(`${API_BASE}/user`);
+  const data = await res.json();
+  return data;
+};
+
+export const deleteUserFromDB = async (userId) => {
+  const res = await fetch(`${API_BASE}/user/${userId}`, {
+    method: "DELETE",
+    mode: "cors",
+    body: JSON.stringify({}),
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  });
+  const data = res.json();
+  return data;
+};
+
+export const deleteAdminFromDB = async (userId) => {
+  const res = await fetch(`${API_BASE}/admin/${userId}`, {
+    method: "DELETE",
+    mode: "cors",
+    body: JSON.stringify({}),
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  });
+  const data = res.json();
+  return data;
+};
+
+export const getAllAdmins = async () => {
+  const res = await fetch(`${API_BASE}/admin`);
+  const data = await res.json();
+  return data;
+};
+
 export const getAdminLogin = async (email, password) => {
   const res = await fetch(API_BASE + "/admin/login", {
+    method: "POST",
+    mode: "cors",
+    body: JSON.stringify({ email: email, password: password }),
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  });
+  const data = res.json();
+  return data;
+};
+
+export const addAdmin = async (email, password) => {
+  const res = await fetch(API_BASE + "/admin", {
     method: "POST",
     mode: "cors",
     body: JSON.stringify({ email: email, password: password }),

@@ -10,6 +10,7 @@ export default ({ logedIn, sessionType, setLogedIn }) => {
   const gotToLoginPage = () => navigate("/login");
   const gotToSignupPage = () => navigate("/signup");
   const goToAddForm = () => navigate("/admin/addhotel");
+  const goToUsersList = () => navigate("/admin/users");
   const extructUserFromEmail = (email) => (email ? email.split("@")[0] : "");
 
   const logout = () => {
@@ -59,6 +60,9 @@ export default ({ logedIn, sessionType, setLogedIn }) => {
                 <RenderIf isTrue={sessionType == "admin"}>
                   <li onClick={goToAddForm}>
                     <button>Add Hotel</button>
+                  </li>
+                  <li onClick={goToUsersList}>
+                    <button>Users</button>
                   </li>
                 </RenderIf>
                 <li onClick={logout}>

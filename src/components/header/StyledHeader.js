@@ -107,6 +107,7 @@ const StyledHeader = styled.div`
               width: 100%;
               text-align: left;
               color: var(--secondary-variant);
+              padding: 0.6rem 0.4rem;
             }
           }
         }
