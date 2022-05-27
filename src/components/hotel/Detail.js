@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { getHotel, getUserId, sendReview } from "../../API";
+import {
+  createHasVisited,
+  getHotel,
+  getUserId,
+  isVisitedBy,
+  sendReview,
+} from "../../API";
 import RatingInput from "./RatingInput";
 import { StyledDetail, StyledImage } from "./StyledHotel";
 import { useNavigate } from "react-router-dom";
@@ -8,11 +14,14 @@ export default ({ hotelId, hotelLocation }) => {
   const navigate = useNavigate();
   const errMsg = useRef(null);
   const succMsg = useRef(null);
+  const saveBtn = useRef(null);
   const [hotel, setHotel] = useState(null);
   const [review, setReview] = useState({
     rating: 0,
     comment: "",
   });
+  const [userId, setUserId] = useState(null);
+  const [isVisited, setIsVisited] = useState(false);
 
   const goToLoginPage = () => navigate("/login");
   const reloadPage = () => navigate(0);
@@ -23,6 +32,13 @@ export default ({ hotelId, hotelLocation }) => {
       ...review,
       [name]: value,
     });
+  };
+
+  const addHotelToVisited = async () => {
+    if (!isVisited) {
+      await createHasVisited(userId, hotelId);
+      saveBtn.current.style.color = "var(--primary)";
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -50,16 +66,27 @@ export default ({ hotelId, hotelLocation }) => {
   useEffect(() => {
     const fetchHotel = async () => {
       const data = await getHotel(hotelId);
-      console.log(data);
-      console.log(hotelLocation);
       setHotel(data);
+      if (window.sessionStorage.getItem("username")) {
+        const user = await getUserId(window.sessionStorage.getItem("username"));
+        setUserId(user);
+        const isVisit = await isVisitedBy(user, hotelId);
+        setIsVisited(isVisit.low);
+        if (isVisit.low) {
+          saveBtn.current.style.color = "var(--primary)";
+        }
+      }
     };
     fetchHotel().catch(console.error);
   }, [hotelId, hotelLocation]);
 
   return (
     <StyledDetail>
-      <StyledImage bg={hotel?.imageUrl} />
+      <StyledImage bg={hotel?.imageUrl}>
+        <button ref={saveBtn} onClick={(e) => addHotelToVisited(e)}>
+          <i className="fas fa-bookmark"></i>
+        </button>
+      </StyledImage>
       <div className="info">
         <a href={`http://${hotel?.webSite}`}>
           <h3>

@@ -1,16 +1,19 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getUserId } from "../../API";
 import { RenderIf } from "../../utilities/RenderIf";
 import Logo from "./Logo";
-import { StyledHeader, StyledLogo } from "./StyledHeader";
+import { StyledHeader } from "./StyledHeader";
 
 export default ({ logedIn, sessionType, setLogedIn }) => {
   const navigate = useNavigate();
+  const [userId, setUserId] = useState("");
 
   const gotToLoginPage = () => navigate("/login");
   const gotToSignupPage = () => navigate("/signup");
   const goToAddForm = () => navigate("/admin/addhotel");
   const goToUsersList = () => navigate("/admin/users");
+  const goToVisitedPage = () => navigate(`/user/visited/${userId}`);
   const extructUserFromEmail = (email) => (email ? email.split("@")[0] : "");
 
   const logout = () => {
@@ -20,12 +23,22 @@ export default ({ logedIn, sessionType, setLogedIn }) => {
   };
 
   useEffect(() => {
+    const fetchData = async () => {
+      const user = await getUserId(window.sessionStorage.getItem("username"));
+      setUserId(user);
+    };
+
+    if (window.sessionStorage.getItem("username")) {
+      fetchData().catch(console.error);
+    }
+
     const changeTheme = () => {
       const elements = document.querySelectorAll(".changeable");
       elements.forEach((ele) => {
         ele.classList.toggle("dark");
       });
     };
+
     document.querySelector(".checkbox").addEventListener("change", changeTheme);
     return () => {
       document
@@ -63,6 +76,11 @@ export default ({ logedIn, sessionType, setLogedIn }) => {
                   </li>
                   <li onClick={goToUsersList}>
                     <button>Users</button>
+                  </li>
+                </RenderIf>
+                <RenderIf isTrue={sessionType !== "admin"}>
+                  <li onClick={goToVisitedPage}>
+                    <button>Visited Hotels</button>
                   </li>
                 </RenderIf>
                 <li onClick={logout}>

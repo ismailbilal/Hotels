@@ -68,40 +68,53 @@ export default ({ setHotels }) => {
   return (
     <StyledFiltring onChange={handleChange} className="changeable">
       <label htmlFor="sortBy">Sort By</label>
-      <select name="sortBy" id="sortBy">
-        <option value="name">Name</option>
-        <option value="rating">Rating</option>
-      </select>
-      <div className="orderInputs">
-        <input type="radio" name="sortingOrder" id="asc" value="asc" />
-        <label htmlFor="asc">
-          ASC
-          <i className="fas fa-sort-amount-down-alt"></i>
-        </label>
-        <input type="radio" name="sortingOrder" id="desc" value="desc" />
-        <label htmlFor="desc">
-          DESC
-          <i className="fas fa-sort-amount-down"></i>
-        </label>
+      <div className="select">
+        <select name="sortBy" id="sortBy">
+          <option value="name">Name</option>
+          <option value="rating">Rating</option>
+        </select>
+        <span class="focus"></span>
+      </div>
+      <div className="orderInput">
+        <div className="input">
+          <input type="radio" name="sortingOrder" id="asc" value="asc" />
+          <label htmlFor="asc">
+            ASC
+            <i className="fas fa-sort-amount-down-alt"></i>
+          </label>
+        </div>
+        <div className="input">
+          <input type="radio" name="sortingOrder" id="desc" value="desc" />
+          <label htmlFor="desc">
+            DESC
+            <i className="fas fa-sort-amount-down"></i>
+          </label>
+        </div>
       </div>
       <label htmlFor="city">City</label>
-      <select name="city" id="city">
-        <option value="all">All</option>
-        {cities?.map((city) => (
-          <option key={city?._id} value={city?._id}>
-            {city?.name}
-          </option>
-        ))}
-      </select>
+      <div className="select">
+        <select name="city" id="city">
+          <option value="all">All</option>
+          {cities?.map((city) => (
+            <option key={city?._id} value={city?._id}>
+              {city?.name}
+            </option>
+          ))}
+        </select>
+        <span class="focus"></span>
+      </div>
       <label htmlFor="locality">Locality</label>
-      <select name="locality" id="locality">
-        <option value="all">All</option>
-        {localities?.map((locality) => (
-          <option key={locality?._id} value={locality?._id}>
-            {locality?.name}
-          </option>
-        ))}
-      </select>
+      <div className="select">
+        <select name="locality" id="locality">
+          <option value="all">All</option>
+          {localities?.map((locality) => (
+            <option key={locality?._id} value={locality?._id}>
+              {locality?.name}
+            </option>
+          ))}
+        </select>
+        <span class="focus"></span>
+      </div>
     </StyledFiltring>
   );
 };

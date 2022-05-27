@@ -15,6 +15,7 @@ import Header from "./components/header/Header";
 import Home from "./components/home/Home";
 import Hotel from "./components/hotel/Hotel";
 import Users from "./components/users/Users";
+import Visited from "./components/viseted/Visited";
 
 export default () => {
   const [logedIn, setLogedIn] = useState(
@@ -66,6 +67,7 @@ export default () => {
             path="/admin/users"
             element={sessionType == "admin" ? <Users /> : <Navigate to="/" />}
           />
+          <Route path="/user/visited/:userId" element={<Visited />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>

@@ -2,10 +2,14 @@ import { useEffect, useState } from "react";
 import { getHotelByLocation } from "../../API";
 import { StyledHotel } from "./StyledClosest";
 import { getDistance } from "geolib";
+import { useNavigate } from "react-router-dom";
 
 export default ({ location, userLocation }) => {
+  const navigate = useNavigate();
+
   const [hotel, setHotel] = useState(null);
   const [distance, setDistance] = useState(0);
+  const goToHotelPage = () => navigate(`/browse/hotel/${hotel?._id}`);
 
   useEffect(() => {
     const fetchHotel = async () => {
@@ -30,7 +34,7 @@ export default ({ location, userLocation }) => {
   }, [location, userLocation]);
 
   return (
-    <StyledHotel>
+    <StyledHotel onClick={goToHotelPage}>
       <img src={hotel?.imageUrl} alt="" />
       <div className="info">
         <h4>{hotel?.name}</h4>

@@ -127,13 +127,14 @@ const StyledImage = styled.div`
     position: absolute;
     right: 1rem;
     top: 1rem;
-    transform: scale(1.3);
+    transform: scale(2);
     border: none;
     background-color: rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    & .fa-bookmark {
-      color: rgba(255, 255, 255, 0.8);
-    }
+    color: #fff;
+  }
+  & .checed {
+    color: var(--primary);
   }
 `;
 

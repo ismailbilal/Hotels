@@ -16,6 +16,9 @@
   --on-secondary: #000;
   --on-background: #000;
   --on-error: #fff;
+  --select-border: #777;
+  --select-focus: blue;
+  --select-arrow: var(--select-border);
 }
 
 .dark {

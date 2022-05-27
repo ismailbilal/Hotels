@@ -62,6 +62,7 @@ const StyledList = styled.div`
 `;
 
 const StyledHotel = styled.div`
+  cursor: pointer;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: row;
