@@ -78,4 +78,22 @@ const StyledImage = styled.div`
   transition: all 0.5s;
 `;
 
-export { StyledBrowse, StyledFiltring, StyledList, StyledItem, StyledImage };
+const StyledSearch = styled.input`
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  outline: none;
+  :focus {
+    border: 2px solid var(--primary);
+  }
+`;
+
+export {
+  StyledBrowse,
+  StyledFiltring,
+  StyledList,
+  StyledItem,
+  StyledImage,
+  StyledSearch,
+};

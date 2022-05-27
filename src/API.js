@@ -118,9 +118,13 @@ export const getHotel = async (hotelId) => {
   return data;
 };
 
-export const getHotels = async (sortingType = "name", order = "asc") => {
+export const getHotels = async (
+  sortingType = "name",
+  order = "asc",
+  name = ""
+) => {
   const res = await fetch(
-    `${API_BASE}/hotel?sortingType=${sortingType}&order=${order}`
+    `${API_BASE}/hotel?sortingType=${sortingType}&order=${order}&name=${name}`
   );
   const data = await res.json();
   return data;
