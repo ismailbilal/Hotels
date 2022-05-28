@@ -45,7 +45,7 @@ export default ({ logedIn, sessionType, setLogedIn }) => {
         .querySelector(".checkbox")
         .removeEventListener("change", changeTheme);
     };
-  }, []);
+  }, [logedIn, sessionType, setLogedIn]);
 
   return (
     <StyledHeader className="changeable">
@@ -78,7 +78,7 @@ export default ({ logedIn, sessionType, setLogedIn }) => {
                     <button>Users</button>
                   </li>
                 </RenderIf>
-                <RenderIf isTrue={sessionType !== "admin"}>
+                <RenderIf isTrue={sessionType === "user"}>
                   <li onClick={goToVisitedPage}>
                     <button>Visited Hotels</button>
                   </li>

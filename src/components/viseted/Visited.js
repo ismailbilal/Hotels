@@ -15,12 +15,12 @@ export default () => {
     };
 
     fetchHotels().catch(console.error);
-  }, []);
+  }, [userId]);
 
   return (
     <StyledVisited>
       {hotels?.map((hotel) => (
-        <Hotel hotel={hotel} />
+        <Hotel key={hotel?._id} hotel={hotel} />
       ))}
     </StyledVisited>
   );
