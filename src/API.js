@@ -270,3 +270,29 @@ export const getHotelsVisited = async (userId) => {
   const data = await res.json();
   return data;
 };
+
+export const deleteHotel = async (hotelId) => {
+  const res = await fetch(`${API_BASE}/hotel/${hotelId}`, {
+    method: "DELETE",
+    mode: "cors",
+    body: JSON.stringify({}),
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  });
+  const data = await res.json();
+  return data;
+};
+
+export const deleteLocation = async (locationId) => {
+  const res = await fetch(`${API_BASE}/location/${locationId}`, {
+    method: "DELETE",
+    mode: "cors",
+    body: JSON.stringify({}),
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  });
+  const data = await res.json();
+  return data;
+};

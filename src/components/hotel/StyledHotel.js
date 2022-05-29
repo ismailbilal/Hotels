@@ -14,6 +14,16 @@ const StyledHotel = styled.div`
     flex-direction: row;
     gap: 1rem;
   }
+  & .deleteBtn {
+    background-color: red;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    align-self: flex-end;
+    :hover {
+      opacity: 0.8;
+    }
+  }
   @media (max-width: 786px) {
     & .mapDetail {
       flex-direction: column;

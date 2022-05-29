@@ -55,7 +55,10 @@ export default () => {
             element={<FormAdmin setLogedIn={setLogedIn} />}
           />
           <Route path="/browse" element={<Browse />} />
-          <Route path="/browse/hotel/:id" element={<Hotel />} />
+          <Route
+            path="/browse/hotel/:id"
+            element={<Hotel sessionType={sessionType} />}
+          />
           <Route
             path="/admin/addhotel"
             element={
