@@ -93,10 +93,7 @@ export default ({ setLogedIn }) => {
       <StyledContent>
         <Logo className="logo" />
         <div className="image"></div>
-        <div className="text">
-          Start for free & get <br />
-          attractive offers today !
-        </div>
+        <div className="text">Start for free</div>
       </StyledContent>
       <StyledForm id="form">
         <div className="social">
